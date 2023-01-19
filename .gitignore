@@ -1,0 +1,7 @@
+# Exclude Dynare cached folders and results
+*.log
+capital/
++capital/
++*/
+# Exclude autosaves
+*.asv
