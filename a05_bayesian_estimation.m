@@ -68,25 +68,30 @@ e.rho_UNEM_GAP		= {NaN,0.05,0.95,logdist.beta(0.7,0.2)};
 % % Standard deviations
 e.std_SHK_L_GDP_GAP    = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
 e.std_SHK_DLA_CPI      = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_L_S		   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_RS		   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
+e.std_SHK_L_S		   = {NaN,0.001,5,logdist.invgamma(1,0.1)}; %%
+e.std_SHK_RS		   = {NaN,0.001,5,logdist.invgamma(1,0.1)}; %%
 e.std_SHK_D4L_CPI_TAR  = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_RR_BAR       = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
+e.std_SHK_RR_BAR       = {NaN,0.001,5,logdist.invgamma(1,1)}; %%
 e.std_SHK_DLA_Z_BAR	   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_DLA_GDP_BAR  = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
+e.std_SHK_DLA_GDP_BAR  = {NaN,0.001,5,logdist.invgamma(1,1)}; %%
 e.std_SHK_L_GDP_RW_GAP = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
 e.std_SHK_RS_RW        = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
 e.std_SHK_DLA_CPI_RW   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
 e.std_SHK_RR_RW_BAR    = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_UNEM_BAR	   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_DLA_UNEM_BAR = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
-e.std_SHK_UNEM_GAP	   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
+e.std_SHK_UNEM_BAR	   = {NaN,0.001,5,logdist.invgamma(1,1)}; %%
+e.std_SHK_DLA_UNEM_BAR = {NaN,0.001,5,logdist.invgamma(1,1)}; %%
+e.std_SHK_UNEM_GAP	   = {NaN,0.001,5,logdist.invgamma(1,1)}; %%
 e.std_SHK_L_GDP_BAR	   = {NaN,0.001,5,logdist.invgamma(0.1,0.1)};
 
 %% Bayesian estimation
 % [p_est,post,cov,hess,m_est,v,delta,p_delta] = estimate(m,dd,sdate:edate,e);
-[p_est,post,cov,~,m_est,~,~,~] = estimate(m,dd,sdate:edate,e);
+[p_est,~,cov,~,m_est,~,~,~] = estimate(m,dd,sdate:edate,e, ...
+									   'maxIter',10000, ...
+									   'maxFunEvals',10000);
 
+par = get(m_est,'params');
+
+save params_est par
 
 
 

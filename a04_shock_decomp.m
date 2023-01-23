@@ -6,7 +6,7 @@ clear; clc;
 close all;
 
 %% Read the model
-[m,p,mss] = readmodel_est();
+[m,p,mss] = readmodel_est2();
 
 %% Load filtered data
 d = dbload('results\kalm_his.csv');
