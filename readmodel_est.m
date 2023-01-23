@@ -119,22 +119,22 @@ p.rho_UNEM_GAP  = 0.1783;
 p.u2            = 0.4585;
 
 %% == Standard deviations ===
-p.std_SHK_L_GDP_GAP= 0.3345;
-p.std_SHK_DLA_CPI= 0.4640;
-p.std_SHK_L_S= 0.5047;
-p.std_SHK_RS= 0.0432;
-p.std_SHK_D4L_CPI_TAR= 0.0933;
-p.std_SHK_RR_BAR= 0.4097;
-p.std_SHK_DLA_Z_BAR= 3.6468;
-p.std_SHK_DLA_GDP_BAR= 0.1191;
-p.std_SHK_L_GDP_RW_GAP= 0.4366;
-p.std_SHK_RS_RW= 0.1153;
-p.std_SHK_DLA_CPI_RW= 0.9828;
-p.std_SHK_RR_RW_BAR= 0.5563;
-p.std_SHK_UNEM_BAR= 0.3265;
-p.std_SHK_DLA_UNEM_BAR= 0.1520;
-p.std_SHK_UNEM_GAP= 0.0405;
-p.std_SHK_L_GDP_BAR= 0.5262;
+% p.std_SHK_L_GDP_GAP= 0.3345;
+% p.std_SHK_DLA_CPI= 0.4640;
+% p.std_SHK_L_S= 0.5047;
+% p.std_SHK_RS= 0.0432;
+% p.std_SHK_D4L_CPI_TAR= 0.0933;
+% p.std_SHK_RR_BAR= 0.4097;
+% p.std_SHK_DLA_Z_BAR= 3.6468;
+% p.std_SHK_DLA_GDP_BAR= 0.1191;
+% p.std_SHK_L_GDP_RW_GAP= 0.4366;
+% p.std_SHK_RS_RW= 0.1153;
+% p.std_SHK_DLA_CPI_RW= 0.9828;
+% p.std_SHK_RR_RW_BAR= 0.5563;
+% p.std_SHK_UNEM_BAR= 0.3265;
+% p.std_SHK_DLA_UNEM_BAR= 0.1520;
+% p.std_SHK_UNEM_GAP= 0.0405;
+% p.std_SHK_L_GDP_BAR= 0.5262;
 
 
 %% === Solving the model === 

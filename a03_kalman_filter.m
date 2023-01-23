@@ -8,8 +8,31 @@ close all;
 
 addpath utils
 
+REPORT = false;
+
 %% Read the model
 [m,p,mss] = readmodel_est();
+
+%% Set standard deviations
+p.std_SHK_L_GDP_GAP= 1.0582;
+p.std_SHK_DLA_CPI= 1.4679;
+p.std_SHK_L_S= 1.5966;
+p.std_SHK_RS= 0.13667;
+p.std_SHK_D4L_CPI_TAR= 0.29516;
+p.std_SHK_RR_BAR= 1.2961;
+p.std_SHK_DLA_Z_BAR= 11.537;
+p.std_SHK_DLA_GDP_BAR= 0.37678;
+p.std_SHK_L_GDP_RW_GAP= 0.4366;
+p.std_SHK_RS_RW= 0.1153;
+p.std_SHK_DLA_CPI_RW= 0.9828;
+p.std_SHK_RR_RW_BAR= 0.5563;
+p.std_SHK_UNEM_BAR= 1.0329;
+p.std_SHK_DLA_UNEM_BAR= 0.48086;
+p.std_SHK_UNEM_GAP= 0.12812;
+p.std_SHK_L_GDP_BAR= 1.6647;
+
+m = assign(m,p);
+m = solve(m);
 
 %% Create model report 
 m = modelreport(m);
@@ -36,6 +59,24 @@ dd.OBS_L_GDP_GAP(qq(2013,2))  = 0.0;
 dd.OBS_L_GDP_GAP(qq(2019,3))  = 0.1;
 dd.OBS_L_GDP_GAP(qq(2021,4))  = 2.0;
 
+%% Setup the filtration
+stds = get(m,'std');         % get the names of all model shock stds 
+list_std = fieldnames(stds); % convert those into a cell array
+% now for each std create a time series with the value of 1 repeated
+% for every period
+mult = dbbatch(stds,'$0','Series(sdate:edate,1)','namelist',list_std);
+
+list_std = fieldnames(get(m,'std'));
+rw_std = {'std_SHK_L_GDP_RW_GAP','std_SHK_RS_RW','std_SHK_DLA_CPI_RW','std_SHK_RR_RW_BAR'};
+list_std = setdiff(list_std,rw_std);
+
+%--- a database of updated (i.e. multiplied) STDs
+p_aux = (get(m,'param'));
+dbstd = dbbatch(mult,'$0','mult.$0.*p_aux.$0','namelist',list_std);
+
+[mod_ev,p_ev,tmp,a,b,multvcov] = find_shock_mult(0.10,10,1e-3,30,p,m,dd,...
+                                               sdate:edate,list_std,dbstd);
+
 %% Filtration
 % Input arguments:
 %   m - solved model object
@@ -45,6 +86,7 @@ dd.OBS_L_GDP_GAP(qq(2021,4))  = 2.0;
 %   m_kf - model object
 %   g - output structure with smoother or prediction data
 %   v - estimated variance scale factor
+
 [m_kf,g,v,delta,pe] = filter(m,dd,sdate:edate,'returnCont=',true);
 
 h = g.mean;
@@ -55,7 +97,30 @@ d = dbextend(d,h);
 dbsave(d,'results/kalm_his.csv');
 save('results/kalm_his.mat', 'g');
 
+%%
+
+m_kf = mod_ev;
+enames = list_std';
+
+sc0        = [];
+se0        = [];
+log_contr0 = [];
+for iter = 1:numel(enames)
+  ename           = enames{iter}(5:end);
+  sc0(iter)        = m_kf.(['std_' ename]);
+  se0(iter)        = std(d.(ename)(sdate:edate));
+  
+  aux             = sc0(iter)*mult.(['std_' ename]);
+  log_contr0(iter) = sum((d.(ename)(sdate:edate)./(aux(sdate:edate))).^2);  
+end
+
+t0 = table(log_contr0',sc0', se0', ...
+          'VariableNames', {'Loglik','Calibr','Estim'}, ...
+          'RowNames', enames');
+disp(t0);
+
 %% Report 
+if REPORT
 % full version
 disp('Generating Filtration Report...');
 x = report.new('Filtration report','visible',true);
@@ -215,5 +280,7 @@ x.series('',[d.rho_UNEM_BAR*d.UNEM_BAR{-1} (1-d.rho_UNEM_BAR)*d.ss_UNEM_BAR d.DL
 
 x.publish('results/Filtration','display',false);
 disp('Done!!!');
+
+end
 
 rmpath utils
