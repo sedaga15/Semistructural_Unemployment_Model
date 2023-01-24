@@ -2,11 +2,12 @@
 %%% Historical shock decomposition %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Housekeeping
-clear; clc;
+clear; 
+% clc;
 close all;
 
 %% Read the model
-[m,p,mss] = readmodel_est2();
+[m,p,mss] = readmodel_est3();
 
 %% Load filtered data
 d = dbload('results\kalm_his.csv');
@@ -23,13 +24,14 @@ s = simulate(m,d,drange,'anticipate',false,'contributions',true);
 g = grouping(m,'shocks');
 
 g = addgroup(g,'Demanda','SHK_L_GDP_GAP');
-g = addgroup(g,'Oferta','SHK_DLA_CPI');
+g = addgroup(g,'Oferta',{'SHK_DLA_CPI','SHK_DLA_CPI_RW'});
 g = addgroup(g,'Política Monetaria','SHK_RS');
 g = addgroup(g,'Tipo de cambio','SHK_L_S');
 g = addgroup(g,'Producto potencial',{'SHK_L_GDP_BAR','SHK_DLA_GDP_BAR'});
 g = addgroup(g,'Demanda externa',{'SHK_L_GDP_RW_GAP'});
 g = addgroup(g,'NAIRU','SHK_UNEM_BAR');
 g = addgroup(g,'Crecimiento NAIRU','SHK_DLA_UNEM_BAR');
+g = addgroup(g,'Inflación objetivo','SHK_D4L_CPI_TAR');
 
 [dg,lg] = eval(g,s,'append',false);
 lg{end} = 'Otros';
@@ -54,6 +56,7 @@ colors = [
 	53,151,143		% externos
 	254,224,139		% nairu
 	255,127,0		% crec. nairu
+	200,30,30		% pm ext
 	202,178,214		% otros
 ]/255;
 
@@ -80,8 +83,9 @@ for ii = 1:size(vars,1)
 	elseif ii == 4
 		legend(lg,'Location','northwest','FontSize',12,'Box','on')
 	elseif ii == 5
-		plot(drange,d.(vars{ii,1}),'LineWidth',1,'Color','k')
-		legend([lg ''],'Location','southwest','FontSize',12,'Box','on')
+% 		plot(drange,d.(vars{ii,1}),'LineWidth',1,'Color','k')
+		plot(drange,d.D4L_CPI-d.D4L_CPI_TAR,'LineWidth',1,'Color','k')
+		legend([lg ''],'Location','northwest','FontSize',12,'Box','on')
 	else
 		legend(lg,'Location','best','FontSize',12,'Box','on')
 	end

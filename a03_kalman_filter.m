@@ -3,7 +3,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Housekeeping
-clear; clc;
+clear; 
+% clc;
 close all;
 
 addpath utils
@@ -11,7 +12,7 @@ addpath utils
 REPORT = false;
 
 %% Read the model
-[m,p,mss] = readmodel_est2();
+[m,p,mss] = readmodel_est3();
 
 %% Set standard deviations
 % p.std_SHK_L_GDP_GAP= 1.0582;
@@ -35,7 +36,7 @@ REPORT = false;
 % m = solve(m);
 
 %% Create model report 
-m = modelreport(m);
+% m = modelreport(m);
 
 %% Data sample
 sdate = qq(2005,1);
