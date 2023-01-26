@@ -33,10 +33,8 @@ p.ss_UNEM_BAR = 11.1;
 
 % output persistence;
 p.b1 = 0.47; % b1 varies between 0.1 (extremely flexible) and 0.95(extremely persistent)
-%0.47
 % policy passthrough (the impact of monetary policy on real economy); 
 p.b2 = 0.14; % b2 varies between 0.1 (low impact) to 0.5 (strong impact)
-%0.14
 % the impact of external demand on domestic output; 
 p.b3 = 0.20; % b3 varies between 0.1 and 0.7
 %0.20
@@ -49,13 +47,13 @@ p.b4 = 0.75; % b4 varies from 0.3 to 0.8 0.5
 
 % inflation persistence; 
 % p.a1 = 0.3644; % a1 varies between 0.4 (low persistence) to 0.9 (high persistence)
-p.a1 = 0.2912;
+p.a1 = 0.3288;%0.2912;
 % passthrough of marginal costs to inflation (the impact of rmc on inflation); 
 % p.a2 = 0.2383; % a2 varies between 0.1 (a flat Phillips curve and a high sacrifice ratio) to 0.5 (a steep Phillips curve and a low sacrifice ratio)
-p.a2 = 0.2287;
+p.a2 = 0.1147;%0.2287;
 % the ratio of domestic costs in firms' aggregate costs
 % p.a3 = 0.6373; % a3 varies between 0.9 (for a relatively more closed economy) to 0.5 (for a relatively more open economy)
-p.a3 = 0.7847;
+p.a3 = 0.85;%0.8;%0.7847;
 %-------- 3. Monetary policy reaction function (a forward-looking Taylor rule)
 % RS = g1*RS{-1} + (1-g1)*(RSNEUTRAL + g2*(D4L_CPI{+4} - D4L_CPI_TAR{+4}) + g3*L_GDP_GAP) + SHK_RS;
 
@@ -79,16 +77,16 @@ p.e1 = 0.5; % setting e1 equal to 0 reduces the equation to the simple UIP
 
 % persistence of inflation target adjustment to the medium-term target (higher values mean slower adjustment)
 % D4L_CPI_TAR = rho_D4L_CPI_TAR*D4L_CPI_TAR{-1} + (1-rho_D4L_CPI_TAR)*ss_D4L_CPI_TAR + SHK_D4L_CPI_TAR;
-p.rho_D4L_CPI_TAR = 0.95; 
+p.rho_D4L_CPI_TAR = 0.3;%0.95; 
 
 % persistence in convergence of trend variables to their steady-state levels
 % applies for:   DLA_GDP_BAR, DLA_Z_BAR, RR_BAR and RR_RW_BAR
 % example:
 % DLA_Z_BAR = rho_DLA_Z_BAR*DLA_Z_BAR{-1} + (1-rho_DLA_Z_BAR)*ss_DLA_Z_BAR + SHK_DLA_Z_BAR;
-p.rho_DLA_Z_BAR   = 0.5361;
+p.rho_DLA_Z_BAR   = 0.8;%0.5361;
 p.rho_DLA_GDP_BAR = 0.7242;
-p.rho_RR_BAR      = 0.9500;
-p.rho_RR_RW_BAR   = 0.9500;
+p.rho_RR_BAR      = 0.75;%0.9500;
+p.rho_RR_RW_BAR   = 0.75;%0.9500;
 
 % persistence in foreign output gap 
 % L_GDP_RW_GAP = rho_L_GDP_RW_GAP*L_GDP_RW_GAP{-1} + SHK_L_GDP_RW_GAP;
@@ -96,19 +94,19 @@ p.rho_L_GDP_RW_GAP = 0.7612;
 
 % persistence in foreign interest rates and inflation
 % RS_RW = rho_RS_RW*RS_RW{-1} + (1-rho_RS_RW)*(RR_BAR + DLA_CPI_RW) + SHK_RS_RW;
-p.rho_RS_RW      = 0.9500;
+p.rho_RS_RW      = 0.6;
 p.rho_DLA_CPI_RW = 0.3131;
 
 %% calibration components of unemployment
 %L_GDP_BAR = L_GDP_BAR{-1} + DLA_GDP_BAR/4 - n1*4*(UNEM_BAR-UNEM_BAR{-1}) - (1-n1)*(UNEM_BAR{-1}-UNEM_BAR{-5}) + SHK_L_GDP_BAR;
-% p.n1    = 0.9;
+p.n1    = 0.9;
 
 %NAIRU
 %UNEM_BAR = rho_UNEM_BAR*UNEM_BAR{-1} + (1-rho_UNEM_BAR)*ss_UNEM_BAR + DLA_UNEM_BAR - u1*(DLA_GDP_BAR{+8}+DLA_GDP_BAR{-16})/2 + SHK_UNEM_BAR;
 p.rho_UNEM_BAR  = 0.2219; %0.3028
 % p.u1            = [0 0.4434];
 % p.u1            = 0.6594;
-% p.u1            = 0.3840;
+p.u1            = 0.3840;
 %Unemployment growth rate
 %DLA_UNEM_BAR = rho_DLA_UNEM_BAR*DLA_UNEM_BAR{-1} + SHK_DLA_UNEM_BAR;
 p.rho_DLA_UNEM_BAR    = 0.8742;
@@ -118,25 +116,7 @@ p.rho_DLA_UNEM_BAR    = 0.8742;
 p.rho_UNEM_GAP  = 0.2521;
 % p.u2            = 0.3973;
 p.u2           = 0.4503;
-%% == Standard deviations ===
-p.std_SHK_L_GDP_GAP=4.0;
-p.std_SHK_DLA_CPI= 1.2993; %1.3260
-p.std_SHK_L_S= 10; %5.8057
-p.std_SHK_RS= 2.35; %0.50
-p.std_SHK_D4L_CPI_TAR= 2.85;
-p.std_SHK_RR_BAR= 0.6308;
-p.std_SHK_DLA_Z_BAR= 1.55;
-%1.55
-p.std_SHK_DLA_GDP_BAR= 0.5;
-%0.5
-p.std_SHK_L_GDP_RW_GAP= 4.20;
-p.std_SHK_RS_RW= 0.3641;
-p.std_SHK_DLA_CPI_RW= 3.1552;
-p.std_SHK_RR_RW_BAR= 0.2;
-p.std_SHK_UNEM_BAR= 0.8531; %0.7488
-p.std_SHK_DLA_UNEM_BAR= 0.3119; %0.4882
-p.std_SHK_UNEM_GAP= 0.1828; %0.3208 
-p.std_SHK_L_GDP_BAR= 2.30;
+
 
 
 %% === Solving the model === 

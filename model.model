@@ -145,8 +145,8 @@ L_Z = L_S + L_CPI_RW - L_CPI;
 DLA_Z_BAR{+1} = RR_BAR - RR_RW_BAR - PREM;
 
 %% === Identities ===
-GROWTH_BAR = 4*(L_GDP_BAR - L_GDP_BAR{-1});
 L_GDP_BAR = L_GDP_BAR{-1} + DLA_GDP_BAR/4 - n1*(UNEM_BAR-UNEM_BAR{-1}) - (1-n1)*(UNEM_BAR{-1}-UNEM_BAR{-16}) + SHK_L_GDP_BAR;
+GROWTH_BAR  = 4*(L_GDP_BAR - L_GDP_BAR{-1});
 DLA_Z_BAR   = 4*(L_Z_BAR - L_Z_BAR{-1});
 DLA_Z       = 4*(L_Z - L_Z{-1});
 DLA_GDP     = 4*(L_GDP - L_GDP{-1});
@@ -178,10 +178,9 @@ RR_RW_GAP    = RR_RW - RR_RW_BAR;
 
 DLA_CPI_RW   = 4*(L_CPI_RW - L_CPI_RW{-1});
 
-%% === Labour Market Equations ===
+%% === Labor Market Equations ===
 UNEM_GAP = UNEM_BAR - UNEM;
 UNEM_BAR = rho_UNEM_BAR*UNEM_BAR{-1} + (1-rho_UNEM_BAR)*ss_UNEM_BAR + DLA_UNEM_BAR - u1*(L_GDP_GAP{-8}+L_GDP_GAP{-7}+L_GDP_GAP{-6}+L_GDP_GAP{-5}+L_GDP_GAP{-4}+L_GDP_GAP{-3}+L_GDP_GAP{-2}+L_GDP_GAP{-1}+L_GDP_GAP{+1}+L_GDP_GAP{+2}+L_GDP_GAP{+3}+L_GDP_GAP{+4}+L_GDP_GAP{+5}+L_GDP_GAP{+6}+L_GDP_GAP{+7}+L_GDP_GAP{+8})/16 + SHK_UNEM_BAR;
-%UNEM_BAR = rho_UNEM_BAR*UNEM_BAR{-1} + (1-rho_UNEM_BAR)*ss_UNEM_BAR + DLA_UNEM_BAR - u1*(L_GDP_GAP{-8}+L_GDP_GAP{+8})/2 + SHK_UNEM_BAR;
 DLA_UNEM_BAR = rho_DLA_UNEM_BAR*DLA_UNEM_BAR{-1} + SHK_DLA_UNEM_BAR;
 UNEM_GAP = rho_UNEM_GAP*UNEM_GAP{-1} + u2*L_GDP_GAP + SHK_UNEM_GAP;
 %% ------------------------------------------------------------------------------- %

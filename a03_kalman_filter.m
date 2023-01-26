@@ -12,28 +12,7 @@ addpath utils
 REPORT = false;
 
 %% Read the model
-[m,p,mss] = readmodel_est3();
-
-%% Set standard deviations
-% p.std_SHK_L_GDP_GAP= 1.0582;
-% p.std_SHK_DLA_CPI= 1.4679;
-% p.std_SHK_L_S= 1.5966;
-% p.std_SHK_RS= 0.13667;
-% p.std_SHK_D4L_CPI_TAR= 0.29516;
-% p.std_SHK_RR_BAR= 1.2961;
-% p.std_SHK_DLA_Z_BAR= 11.537;
-% p.std_SHK_DLA_GDP_BAR= 0.37678;
-% p.std_SHK_L_GDP_RW_GAP= 0.4366;
-% p.std_SHK_RS_RW= 0.1153;
-% p.std_SHK_DLA_CPI_RW= 0.9828;
-% p.std_SHK_RR_RW_BAR= 0.5563;
-% p.std_SHK_UNEM_BAR= 1.0329;
-% p.std_SHK_DLA_UNEM_BAR= 0.48086;
-% p.std_SHK_UNEM_GAP= 0.12812;
-% p.std_SHK_L_GDP_BAR= 1.6647;
-
-% m = assign(m,p);
-% m = solve(m);
+[m,p,mss] = readmodel_est4();
 
 %% Create model report 
 % m = modelreport(m);

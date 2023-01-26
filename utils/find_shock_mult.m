@@ -20,10 +20,10 @@ function [mNew,paramNew,stdNew,a,b,mult]=find_shock_mult(a,b,eps,N,param,model,d
   m = sstate(m); %,'Growth',true,'Display','off','block',true,'solver','fsolve');
   fx2 = loglik(m,dd,range,'deviation',false,'std',pp,'relative',false);
 
-  fprintf('------------------------------------------------------\n');
-  fprintf(' x1 x2 f(x1) f(x2) b - a\n');
-  fprintf('------------------------------------------------------\n');
-  fprintf('%.4e %.4e %.4e %.4e %.4e\n', x1, x2, fx1, fx2, b-a);
+%   fprintf('------------------------------------------------------\n');
+%   fprintf(' x1 x2 f(x1) f(x2) b - a\n');
+%   fprintf('------------------------------------------------------\n');
+%   fprintf('%.4e %.4e %.4e %.4e %.4e\n', x1, x2, fx1, fx2, b-a);
   for i = 1:N-2
     if fx1 < fx2
       b = x2;
@@ -48,7 +48,7 @@ function [mNew,paramNew,stdNew,a,b,mult]=find_shock_mult(a,b,eps,N,param,model,d
       m = sstate(m); %,'Growth',true,'Display','off','block',true,'solver','fsolve');
       fx2 = loglik(m,dd,range,'deviation',false,'std',pp,'relative',false);
     end
-    fprintf('%.4e %.4e %.4e %.4e %.4e\n', x1, x2, fx1, fx2, b-a);
+%     fprintf('%.4e %.4e %.4e %.4e %.4e\n', x1, x2, fx1, fx2, b-a);
     if (abs(b-a) < eps)
       fprintf('succeeded after %d steps\n', i);
       mult=(a+b)/2;
